@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 아래 필수적으로 추가해야 하는 태그 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lytear.spring.lesson02.dao.UsedGoodsDAO"><!-- 필수로 들어가야 될 속성.
+DAO의 정확한 위치와 인터페이스 이름을 써줌. 콘트롤 누르면 이동. DAO 안에 있는 메소드를 이 xml에서 구현 -->
+	<!-- 
+	html은 브라우저가 해석해 화면에 보여주는 용도이고, xml은 데이터를 만드는 용도 (데이터 저장하는 형식)
+	
+	xml 은 데이터 저장하는 형식인데 json은 막 집어넣는 거라 에러 찾기 힘드나
+ * xml은 규격 만들 수 있어 태그, 속성들 미리 정해 주고, 정해진 틀에서 벗어나면
+ * 에러 형태로 보여줌. xml은 형식을 많이 갑갑하게 채워줘야 할 때 사용. 
+   DTD 라는 형식으로 위에 두 줄 포함시켜 놓으면 그 안에 있는 정보를 기반으로 해당 xml이 규격에 맞게 쓰여지고 있는지 판단.
+   MyBatis라는 곳에서 제공하며 필요한 것(규격)을 가져다 쓰면 됨
+	구글링 mybatis dtd-->
+	
+	<!-- used_goods 테이블의 모든 행 가져오기 
+	
+	DTD 에 정해진 대로 select 라는 태그 사용
+	DAO 안에 만들어 놨는 메소드를 가져와서 구현
+	
+	XML 통해 쿼리 작성시는 줄 바꿈 되게 많이 해. 다른 XML 코드와 섞여 있고 여러가지 문법 많이 사용하기 때문
+	프로그램 통해 쿼리 사용시는 SELECT * 옳지 않고 칼럼 이름 다  써야 해 => 
+	
+	칼럼 추가 등 발생해도 프로그램 수행 변함 없이 제공 가능
+	
+	실무에서 사용하는 쿼리는 한 번 코드에 박아 놓으면 바꿀 일이 없음. 수정 사항이 있을 때까지 계속 이 쿼리로 수행.
+	중간에 테이블 수정을 하면 *로 되어 있으면 지금 상태, 수정된 상태의 데이터를 그대로를 가져오게 돼.
+	우리가 만든 프로그램은 원래 있는 테이블을 기반으로 가져왔는데 칼럼 이름이 바뀌어져 버려 => 
+	프로그램 내용에 문제가 발생할 수 있어. 
+	
+	매퍼 안에 select 태그 만들고 거기에 해당하는 메소드(selectUsedGoodsLIst) 
+	구현(쿼리를 수행한 결과) 객체 생성과 값 저장까지 얘가 알아서 해줌
+	UsedGoodsDAO의 타입이 List인 거도 알아서 해 줌=> business layer에서 호출하면 List 형태로 만들어서 결과를 돌려줌
+	
+	id에는 DAO에서 만든 메소드를 써 줌. Select 태그 안에 메소드 통해 실행하고 싶은 쿼리를 작성
+	
+	resultType : 쿼리 수행 결과는 workbench에서 나오는 형태인데 어떤 형태의 객체에다 이 내용을 저장할
+	지 (클래스로) 알려줘야(컬럼 이름과 똑같이 일치하는 클래스 만들어 저장하기로 만들었음) 우리가 
+	만들어 놓은 객체에 세팅이 됨(List는 안 적어줘도 기본임). 콘트롤 누르면 이동
+	이 xml에서 select한 결과를 컬럼 이름과 일치하는 멤버 변수에다가 객체를 생성해서 거기에 값을 저장
+	
+	-->
+
+	<select id="selectUsedGoodsList" resultType="com.lytear.spring.lesson02.model.UsedGoods">
+		SELECT
+			`id`
+			,`title`
+			,`price`
+			,`description`
+			,`picture`
+			,`sellerId`
+			,`createdAt`
+			,`updatedAt`
+		FROM 
+			`used_goods`<!-- 세미콜론은 쓰건 안 쓰건 관계 없음 -->
+	</select>
+
+</mapper>
+
+
