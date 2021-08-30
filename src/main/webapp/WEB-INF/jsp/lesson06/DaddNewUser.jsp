@@ -17,23 +17,31 @@
 <body>
 	<div class="container">
 	
-		<form method="post" action="/Dlesson06/add_user" id="userForm">
+		<!--  <form method="post" action="/Dlesson06/add_user" id="userForm">-->
 			<label>이름</label><input type="text" name="name" class="form-control" id="nameInput">
 			<label>생년월일</label><input type="text" name="yyyymmdd" class="form-control" id="yyyymmddInput">
-			<label>이메일</label><input type="text" name="email" class="form-control" id="emailInput">
 			<textarea class="form-control" name="introduce" id="introduceInput"></textarea>
+			<label>이메일</label><input type="text" name="email" class="form-control" id="emailInput">
+			
 		
-			<button type="submit" class="btn btn-success" id="addBtn">추가</button>
-		</form>
+			  <button type="button" class="btn btn-success" id="addBtn">추가</button>
+		<!--</form>-->
 	
 	
 	
 	</div>	
+	
 	<script>
-		$(document.ready(function(){
-			alert("submit 이벤트");
-			$("#userForm").on("submit",function(){
+	
+		$(document).ready(function(){
+	
+		// $("#userForm").on("submit",function(e){	
+	
+	
+			$("#addBtn").on("click",function(e){
 				
+				
+				//e.preventDefault();
 				var name=$("#nameInput").val();
 				var yyyymmdd=$("#yyyymmddInput").val();
 				var email=$("#emailInput").val();
@@ -58,6 +66,23 @@
 					
 					return ;
 				}
+				$.ajax({
+					type:"post",	
+					url:"/Dlesson06/add_user",
+					data:{"name":name,"yyyymmdd":yyyymmdd,"email":email,"introduce":introduce},
+					success:function(data){
+						if(data.result == "success") {
+							
+							alert("추가 성공");
+						} else {
+							alert("추가 실패");
+						}
+							
+					},
+					error:function(e){
+						alert("error");
+					}
+				});
 				
 				
 			});

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- DTD: : 해당 xml의 규격을 잡아주는 놈. mapper 말고는 들어올 수 있는 놈 없음--> 
+ 
+<mapper namespace="com.lytear.spring.lesson03.dao.ReviewDAO">
+	<select id="selectReview" resultType="com.lytear.spring.lesson03.model.Review"
+	parameterType="int">
+		SELECT 
+			`id`
+			,`storeId`	
+			,`menu`
+			,`userName`
+			,`point`
+			,`review`
+			,`createdAt`
+			,`updatedAt`
+		FROM 
+			`new_review`
+		WHERE 
+			<!--  `id` = 2-->
+	 		`id` = #{id}
+	
+	
+	</select>
+
+	<!--  쿼리 추가할 때
+	<select id="
+	
+	
+	 -->
+
+
+	
+	<insert id="insertReview" parameterType="map"><!-- 알아서 map으로 인지하고 내용 꽂아줌
+	insert 실행하면 그 실행된 행을 잡아올 수 있다(controller의 int count) -->
+		INSERT INTO
+			`new_review`
+		(	
+			`storeId`	
+			,`menu`
+			,`userName`
+			,`point`
+			,`review`
+			,`createdAt`
+			,`updatedAt`
+		) VALUES (
+			#{storeId}
+			,#{menu}	
+			,#{userName}
+			,#{point}
+			,#{review}
+			, now()
+			, now()
+		)
+		
+		
+	
+	</insert>
+	
+	<insert id="insertReviewAsObject" parameterType="com.lytear.spring.lesson03.model.Review">
+	<!-- xml에서 특정 클래스 포함시킬 때는 패키지 이름까지 모두 적어 줌 -->
+		INSERT INTO
+			`new_review`
+		(	
+			`storeId`	
+			,`menu`
+			,`userName`
+			,`point`
+			,`review`
+			,`createdAt`
+			,`updatedAt`
+		) VALUES (
+			#{storeId}
+			,#{menu}<!-- <= 내가 가져오는 객체와 이 파라미터 안의 멤버 변수 이름이랑 매칭이 되면 된다 -->	
+			,#{userName}
+			,#{point}
+			,#{review}
+			, now()
+			, now()
+		)
+		
+	</insert>
+	
+	<update id="updateReviewByid" parameterType="map">
+		UPDATE
+			`new_review`
+		SET
+			`review` = #{review},
+			`updatedAt` = now()
+		WHERE
+			`id`=#{id}
+	
+	</update>
+	
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM
+			`new_review`
+		WHERE
+			`id`=#{id}
+	</delete>
+	
+	
+	
+	
+
+
+</mapper>

@@ -5,7 +5,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  
- <mapper namespace="com.lyteaer.spring.lesson04.dao.NewUserDAO">
+ <mapper namespace="com.lytear.spring.lesson04.dao.NewUserDAO">
  	<insert id="insertUser" parameterType="map">
  		INSERT INTO
  			`new_user`
@@ -31,7 +31,6 @@
  		
  	
  	
- 	
  	</insert>
  
  	<select id="selectLastUser" resultType="com.lytear.spring.lesson04.model.NewUser">
@@ -52,8 +51,18 @@
  	
  	
  	</select>
- 
- 
+
+ 	<select id="selectCountByName" parameterType="string" resultType="int">
+ 	<!-- resultType int : count에 대한 결과니까 -->
+ 		SELECT
+	 		count(*) 		
+ 		FROM
+ 		 	`new_user`
+ 		WHERE
+ 			`name` = #{name}
+ 	
+ 	
+ 	</select>
  
  
  </mapper>

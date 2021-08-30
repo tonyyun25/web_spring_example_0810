@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.lytear.spring.Dlesson04.dao.SingerDAO">
+	<insert id="insertSinger" parameterType="map">
+		
+		INSERT INTO 
+			`singer`
+		(
+			`name`
+			,`debut`
+			,`agency`
+			,`createdAt`
+			,`updatedAt`
+			
+		)
+		VALUES
+		(
+			#{name}
+			,#{debut}
+			,#{agency}
+			,now()
+			,now()
+		
+		)
+		
+		
+	
+	</insert>
+
+
+	<select id="lastSingerView" resultType="com.lytear.spring.Dlesson04.model.Singer">
+		
+		SELECT
+			`name`
+			,`debut`
+			,`agency`
+		
+		FROM
+			`singer`
+		ORDER BY `id` DESC
+		LIMIT 1	
+	
+	</select>
+
+
+
+
+
+
+</mapper>
+
+
+
+
+
